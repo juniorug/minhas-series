@@ -52,6 +52,10 @@ const InfoSerie = ({ match }) => {
     }) 
   }
 
+  const onChangeGenre = evt => {
+    setGenreId(evt.target.value)
+  }
+
   const seleciona = value => () => {
     setForm( {
       ...form,
@@ -68,7 +72,7 @@ const InfoSerie = ({ match }) => {
     })
   }
   if (success) {
-    //return <Redirect to='/series' />
+    return <Redirect to='/series' />
   }
   return (
     <div>
@@ -109,13 +113,12 @@ const InfoSerie = ({ match }) => {
             <div className='form-group'>
               <label htmlFor='comments'>Comentários</label>
               <input type='text' className='form-control' id='comments' placeholder='Comentários'
-                value={form.comments} onChange={onChange('comments')} />
+                value={form.comments || ''} onChange={onChange('comments')} />
             </div>
             <div className='form-group'>
               <label htmlFor='genre'>Gênero</label>
-              <select className='form-control' id='genre' onChange={onChange('genre_id')} value={genreId}>
-                { genres.map(genre => <option key={genre.id} value={genre.id}
-                  selected={genre.id === form.genre}>{genre.name}</option>) }
+              <select className='form-control' id='genre' onChange={onChangeGenre} defaultValue={genreId}>
+                { genres.map(genre => <option key={genre.id} value={genre.id}>{genre.name}</option>) }
               </select>
             </div>
             <div className='form-check'>
