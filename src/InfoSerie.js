@@ -4,9 +4,11 @@ import {Redirect} from 'react-router-dom'
 import { Badge } from 'reactstrap'
 
 const InfoSerie = ({ match }) => {
-  const [form, setForm] = useState({})
+  const [form, setForm] = useState({
+    name: ''
+  })
   const [success, setSuccess] = useState(false)
-  const [mode, setMode] = useState('EDIT')  
+  const [mode, setMode] = useState('INFO')  
   const [data, setData] = useState({})
   const [genres, setGenres] = useState([])
   const [genreId, setGenreId] = useState('')
@@ -95,14 +97,13 @@ const InfoSerie = ({ match }) => {
           </div>
         </div>
       </header>
-      <div>
+      <div className='container'>
         <button className='btn btn-primary' onClick={() => setMode('EDIT')}>Editar</button>
       </div>
       {
         mode === 'EDIT' &&
         <div className='container'>
-          <h1>Nova Série</h1>
-          <pre>{JSON.stringify(form)}</pre>
+          <h1>Editar série</h1>
           <button  className='btn btn-primary' onClick={() => setMode('INFO')}>Cancelar edição</button>
           <form>
             <div className='form-group'>
@@ -117,18 +118,18 @@ const InfoSerie = ({ match }) => {
             </div>
             <div className='form-group'>
               <label htmlFor='genre'>Gênero</label>
-              <select className='form-control' id='genre' onChange={onChangeGenre} defaultValue={genreId}>
+              <select className='form-control' id='genre' onChange={onChangeGenre} value={genreId}>
                 { genres.map(genre => <option key={genre.id} value={genre.id}>{genre.name}</option>) }
               </select>
             </div>
             <div className='form-check'>
-              <input className='form-check-input' type='radio' name='status' id='assistido' value='ASSISTIDO' 
-                onClick={seleciona('ASSISTIDO')} />
+              <input className='form-check-input' type='radio' checked={form.status ==='ASSISTIDO'} name='status' id='assistido' value='ASSISTIDO' 
+                onChange={seleciona('ASSISTIDO')} />
               <label className='form-check-label' htmlFor='assistido'>Assistido</label>
             </div>
             <div className='form-check'>
-              <input className='form-check-input' type='radio' name='status' id='paraAssistir' value='PARA_ASSISTIR' 
-                onClick={seleciona('PARA_ASSISTIR')} />
+              <input className='form-check-input' type='radio' checked={form.status === 'PARA_ASSISTIR'} name='status' id='paraAssistir' value='PARA_ASSISTIR' 
+                onChange={seleciona('PARA_ASSISTIR')} />
               <label className='form-check-label' htmlFor='paraAssistir'>Para assistir</label>
             </div>
             <button type='button' onClick={save} className='btn btn-primary'>Salvar</button>
